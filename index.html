@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <h1 id="total-sales">Loading...</h1>
+
+    <script>
+        const seed = '62fb68438294872dd6d295ce33d60631';
+        fetch('data.csv')
+            .then(response => response.text())
+            .then(data => {
+                let total = 0;
+                const rows = data.trim().split('\n');
+                for (const row of rows) {
+                    const columns = row.split(',');
+                    if (columns.length > 1 && !isNaN(parseFloat(columns[1]))) {
+                        total += parseFloat(columns[1]);
+                    }
+                }
+                document.title = `Sales Summary ${seed}`;
+                document.getElementById('total-sales').textContent = total;
+            });
+    </script>
+</body>
+
+</html>
